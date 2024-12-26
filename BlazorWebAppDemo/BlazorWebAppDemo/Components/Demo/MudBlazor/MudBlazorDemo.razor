@@ -1,0 +1,33 @@
+﻿@* @page "/mudblazordemo" *@
+@* @rendermode InteractiveServer *@
+@* *@
+@* @using BlazorWebAppDemo.Model *@
+@* @using BlazorWebAppDemo.Services *@
+@* @using MudBlazor *@
+@* *@
+@* @inject ISuperheroService SuperheroService *@
+@* *@
+@* *@
+@* <h3>MudBlazorDemo</h3> *@
+@* *@
+@* <MudPopoverProvider /> *@
+@* <MudSelect *@
+@*     Label="Select Superhero" *@
+@*     @bind-Value="selectedSuperHero"> *@
+@*     @foreach(var superhero in SuperheroService.GetData()) *@
+@*     { *@
+@*         <MudSelectItem Value="@superhero">@superhero.Name</MudSelectItem> *@
+@*     } *@
+@* </MudSelect> *@
+@* *@
+@* <CustomSelect *@
+@*     Label="Super Heroes" *@
+@*     Items="SuperheroService.GetData()" *@
+@*     @bind-Value="@selectedSuperHero"> *@
+@*     @context.Name *@
+@* </CustomSelect> *@
+@* *@
+@* *@
+@* @code { *@
+@*     Superhero selectedSuperHero; *@
+@* } *@

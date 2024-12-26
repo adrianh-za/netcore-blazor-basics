@@ -1,0 +1,12 @@
+﻿@page "/navlinkdemo"
+
+<h3>NavLinkDemo</h3>
+
+<NavLink href="/NavLinkDemo">This page</NavLink>
+<NavLink Match="NavLinkMatch.All" href="/NavLinkDemo">All this page</NavLink>
+<NavLink ActiveClass="MyCustomClass" Match="NavLinkMatch.Prefix" href="/NavLinkDemo">Prefix this page</NavLink>
+<NavLink href="/counter"> Counter</NavLink>
+
+@code {
+
+}

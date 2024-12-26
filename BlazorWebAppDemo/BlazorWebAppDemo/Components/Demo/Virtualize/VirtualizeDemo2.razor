@@ -1,0 +1,36 @@
+﻿@page "/virtualizedemo2"
+@rendermode InteractiveServer
+@using BlazorWebAppDemo.Model
+@using BlazorWebAppDemo.Services
+
+@inject ISuperheroService SuperheroService
+
+<h3>VirtualizeDemo 2</h3>
+
+<table>
+    <Virtualize ItemsProvider="LoadSuperHeroes">
+        <EmptyContent>
+            No data to display
+        </EmptyContent>
+        <ChildContent>
+            <tr>
+                <td>@context.Name</td>
+                <td>@context.RealName</td>
+                <td>@context.Powers</td>
+            </tr>
+        </ChildContent>
+    </Virtualize>
+</table>
+
+
+@code {
+
+    private async ValueTask<ItemsProviderResult<Superhero>> LoadSuperHeroes(ItemsProviderRequest request)
+    {
+        var totalnumberofHeroes = SuperheroService.GetDataCount();
+        var numHeroes = Math.Min(request.Count, totalnumberofHeroes - request.StartIndex);
+        var heroes = await SuperheroService.GetDataAsync(request.StartIndex, numHeroes, request.CancellationToken);
+
+        return new ItemsProviderResult<Superhero>(heroes, totalnumberofHeroes);
+    }
+}

@@ -1,0 +1,22 @@
+﻿@page "/sectionoutletdemo"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Sections
+@using BlazorWebAppDemo.Components.Layout
+
+<h3>SectionOutletDemo</h3>
+
+<SectionContent SectionId="MainLayout.TopbarSection">
+    <button class="btn btn-primary">Click me!!!</button>
+</SectionContent>
+
+<SectionContent SectionName="Menu">
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="sectionoutlotdemo">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Section Outlet Demo
+        </NavLink>
+    </div>
+</SectionContent>
+
+@code {
+
+}

@@ -1,0 +1,33 @@
+﻿@page "/eventcallbackdemo"
+@rendermode InteractiveServer
+
+<h3>EventCallbackDemo (check console)</h3>
+
+<button class="btn btn-primary" @onclick="Clicked">Sync</button>
+<button class="btn btn-primary" @onclick="TaskClickedAsync">Async</button>
+<button class="btn btn-primary" @onclick="() => Clicked()">Sync Args</button>
+<button class="btn btn-primary" @onclick="async () => await TaskClickedAsync()">Async Args</button>
+
+@code {
+    void Clicked()
+    {
+        Console.WriteLine("Button clicked");
+    }
+
+    Task TaskClickedAsync()
+    {
+        Console.WriteLine("Button clicked async");
+        return Task.CompletedTask;
+    }
+
+    void ClickedWithArgs(MouseEventArgs e)
+    {
+        Console.WriteLine($"Button clicked with args: {e.ClientX}, {e.ClientY}");
+    }
+
+    Task TaskClickedWithArgsAsync(MouseEventArgs e)
+    {
+        Console.WriteLine($"Button clicked with args async: {e.ClientX}, {e.ClientY}");
+        return Task.CompletedTask;
+    }
+}

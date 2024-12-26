@@ -1,0 +1,36 @@
+﻿@using System.Linq.Expressions
+@using global::MudBlazor
+@using MudBlazor
+@typeparam T
+
+<MudSelect
+    Value="@Value"
+    ValueChanged="@ValueChanged"
+    For="@ValueExpression"
+    Variant="Variant.Filled"
+    Label="@Label">
+    @foreach (var item in Items)
+    {
+        <MudSelectItem Value="@item">@ChildContent(item)</MudSelectItem>
+    }
+</MudSelect>
+
+@code {
+    [Parameter, EditorRequired]
+    public required T Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<T>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public required RenderFragment<T> ChildContent { get; set; }
+
+    [Parameter]
+    public required IEnumerable<T> Items { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+}

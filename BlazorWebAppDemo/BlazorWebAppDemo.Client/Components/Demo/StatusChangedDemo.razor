@@ -1,0 +1,23 @@
+﻿@page "/statuschangeddemo"
+@rendermode InteractiveWebAssembly
+
+<h3>StatusChangedDemo</h3>
+@currentTime.ToLongTimeString()
+
+
+@code {
+    TimeOnly currentTime;
+    Timer? _timer;
+
+    /// <inheritdoc />
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _timer = new Timer(async _  =>
+        {
+            currentTime = TimeOnly.FromDateTime(DateTime.Now);
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+    }
+}

@@ -1,0 +1,83 @@
+﻿@page "/bindingdemo"
+@rendermode InteractiveServer
+
+<h3>BindingDemo</h3>
+
+<input type="text"
+       value="Test"/>
+<br />
+<input type="text"
+       value="TextValue1"/>
+<br />
+@TextValue1
+<br />
+<br />
+
+<input type="text"
+       @bind="TextValue2"/>
+<br />
+@TextValue2
+<br />
+<br />
+
+<input type="text"
+       @bind-value="TextValue4"
+       @bind-value:event="oninput"/>
+<br />
+@TextValue4
+<br />
+<br />
+
+<input type="text"
+       @bind-value="TextValue5"
+       @bind-value:after="@(() => { TextValue5 = $"{TextValue5} after."; })"/>
+<br />
+@TextValue5
+<br />
+<br />
+
+<input type="text"
+       @bind-value="TextValue6"
+       @bind-value:after="OnTextValue6AfterChange"/>
+<br />
+@TextValue6
+<br />
+<br />
+
+<input type="text"
+       @bind-value="TextValue7"
+       @bind-value:after="() => {  OnAfterChange(TextValue7); }"/>
+<br />
+@TextValue7
+<br />
+<br />
+
+<input type="text"
+       @bind-value:set="(newValue) => TextValue4 = newValue"
+       @bind-value:get="TextValue4" />
+<br />
+@TextValue4
+<br />
+<br />
+
+
+@code {
+    string TextValue1 = "Var Test 1";
+    string TextValue2 = "Var Test 2";
+    string TextValue3 = "Var Test 3";
+    string TextValue4 = "Var Test 4";
+    string TextValue5 = "Var Test 5";
+    string TextValue6 = "Var Test 6";
+    string TextValue7 = "Var Test 7";
+    string TextValue8 = "Var Test 8";
+
+    void OnTextValue6AfterChange()
+    {
+        TextValue6 = $"{TextValue6} after.";
+    }
+
+    void OnAfterChange(string value)
+    {
+        TextValue7 = $"{value} after.";
+    }
+}

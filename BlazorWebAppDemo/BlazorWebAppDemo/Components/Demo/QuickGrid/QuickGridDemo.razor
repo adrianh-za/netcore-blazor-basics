@@ -1,0 +1,54 @@
+﻿@page "/quickgriddemo"
+@using BlazorWebAppDemo.Model
+@using BlazorWebAppDemo.Services
+@using Microsoft.AspNetCore.Components.QuickGrid
+@rendermode InteractiveServer
+@inject ISuperheroService SuperheroService
+
+<h3>QuickGridDemo</h3>
+
+<QuickGrid
+    Items="@filteredSuperheroes"
+    Pagination="@paginationState">
+    <PropertyColumn Property="@(c => c.Name)" Sortable="true">
+        <ColumnOptions>
+            <div class="search-box">
+                <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Name..." />
+            </div>
+        </ColumnOptions>
+    </PropertyColumn>
+    <PropertyColumn Property="@(c => c.RealName)" Sortable="true">
+        <ColumnOptions>
+            <div class="search-box">
+                <input type="search" autofocus @bind="realNameFilter" @bind:event="oninput" placeholder="Realname..." />
+            </div>
+        </ColumnOptions>
+    </PropertyColumn>
+    <PropertyColumn Property="@(c => c.Powers)" Sortable="true">
+        <ColumnOptions>
+            <div class="search-box">
+                <input type="search" autofocus @bind="powerFilter" @bind:event="oninput" placeholder="Powers..." />
+            </div>
+        </ColumnOptions>
+    </PropertyColumn>
+</QuickGrid>
+<Paginator State="paginationState" />
+
+@code {
+    IQueryable<Superhero>? superheroes;
+    string nameFilter = string.Empty;
+    string realNameFilter = string.Empty;
+    string powerFilter = string.Empty;
+
+    PaginationState paginationState = new PaginationState { ItemsPerPage = 10 };
+
+    IQueryable<Superhero>? filteredSuperheroes => superheroes?
+        .Where(s => string.IsNullOrWhiteSpace(s.Name) || s.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase))
+        .Where(s => string.IsNullOrWhiteSpace(realNameFilter) || s.RealName.Contains(realNameFilter, StringComparison.OrdinalIgnoreCase))
+        .Where(s => string.IsNullOrWhiteSpace(powerFilter) || s.Powers.Contains(powerFilter, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnInitializedAsync()
+    {
+        superheroes = SuperheroService.GetData().AsQueryable();
+    }
+}

@@ -1,0 +1,37 @@
+﻿@page "/stateservicedemo"
+@rendermode InteractiveServer
+@implements IDisposable
+
+@using BlazorWebAppDemo.Services
+
+@inject IStateService StateService
+
+<h3>StateServiceDemo</h3>
+
+<ul>
+    @foreach (var item in StateService.GetMessages())
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<button class="btn btn-primary" @onclick="@(async () => await AddMessage())">Add new message</button>
+
+@code {
+
+    protected override Task OnInitializedAsync()
+    {
+        StateService.OnChange += () => InvokeAsync(StateHasChanged);
+        return Task.CompletedTask;
+    }
+
+    private async Task AddMessage()
+    {
+        await StateService.AddMessage($"New message at {DateTime.Now}");
+    }
+
+    public void Dispose()
+    {
+        StateService.OnChange -= StateHasChanged;
+    }
+}

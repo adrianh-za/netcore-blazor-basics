@@ -1,0 +1,24 @@
+﻿@page "/pagedemo"
+@page "/pagedemoagain"
+@page "/pagedemo/{name}"
+@page "/pagedemo/{id:int}"
+
+<h3>PageDemo</h3>
+
+<strong>Name Value: @(Name ?? "No string given")</strong>
+<br />
+<strong>Id Value: @(Id is null ? "No ID given" : Id)</strong>
+<br />
+<strong>Query Firstname Value: @(FirstName ?? "No firstname given")</strong>
+
+@code {
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    [Parameter, SupplyParameterFromQuery]
+    public string? FirstName { get; set; }
+}

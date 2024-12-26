@@ -1,0 +1,24 @@
+﻿@page "/sessionstorage"
+@rendermode InteractiveServer
+
+@using Blazored.SessionStorage
+@inject ISessionStorageService SessionStorage
+
+<h3>SessionStorageDemo</h3>
+<br />
+@_name
+
+@code {
+    string _name = "Nothing is set yet";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await SessionStorage.SetItemAsync("name", "Rocket Racoon");
+        var storedName = await SessionStorage.GetItemAsync<string>("name");
+        if ((storedName != _name) && (storedName != null))
+        {
+            _name = storedName;
+            StateHasChanged();
+        }
+    }
+}

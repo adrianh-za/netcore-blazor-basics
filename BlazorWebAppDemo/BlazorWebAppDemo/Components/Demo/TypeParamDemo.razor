@@ -1,0 +1,13 @@
+﻿@page "/typeparamdemo"
+
+<h3>TypeParamDemo</h3>
+
+<MyList TItem="string" Items="@_names" />
+<br />
+@{ /*<MyList TItem="int" Items="_numbers" />*/ }
+<MyList Items="@_numbers" />
+
+@code {
+    private readonly List<string> _names = ["Rocket Racoon", "Groot", "Star Lord"];
+    private readonly List<int> _numbers = [1, 2, 3];
+}

@@ -1,0 +1,18 @@
+﻿@page "/codedemo"
+
+<h3>CodeDemo</h3>
+
+@* Implicit Razor Expression *@
+@Name
+
+@* Explicitly Razor Expression *@
+@(DateTime.Now - TimeSpan.FromDays(7))
+
+@{
+    var date = DateTime.Now - TimeSpan.FromDays(7);
+    <p>Date: @date</p>
+}
+
+@code {
+    readonly string Name = "Rocket Racoon";
+}

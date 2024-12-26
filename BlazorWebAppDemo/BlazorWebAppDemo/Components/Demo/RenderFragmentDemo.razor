@@ -1,0 +1,25 @@
+﻿@page "/renderfragmentdemo"
+@using BlazorWebAppDemo.Components.Demo.Templates
+<h3>RenderFragmentDemo</h3>
+
+@GetAlert(@<text>This is the alert</text>, AlertType.Success)
+
+@GetAlertStatic(@<text>This is the alert</text>, AlertType.Danger)
+
+@code {
+    public RenderFragment GetAlert(RenderFragment fragment, AlertType alertType)
+    {
+        return
+            @<div class="alert alert-@alertType.ToString().ToLower()">
+                @fragment
+            </div>;
+    }
+
+    public static RenderFragment GetAlertStatic(RenderFragment fragment, AlertType alertType)
+    {
+        return
+            @<div class="alert alert-@alertType.ToString().ToLower()">
+                @fragment
+            </div>;
+    }
+}

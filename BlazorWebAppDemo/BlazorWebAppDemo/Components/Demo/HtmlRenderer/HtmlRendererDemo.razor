@@ -1,0 +1,36 @@
+﻿@page "/htmlrendererdemo"
+@using BlazorWebAppDemo.Components.Demo.Templates
+
+<h3>HtmlRendererDemo</h3>
+
+@((MarkupString) html)
+
+@code {
+    string html = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        var serviceProvider = services.BuildServiceProvider();
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+        await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
+        html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
+        {
+            RenderFragment content = @<text>Hello, world</text>;
+
+            var parameters = ParameterView.FromDictionary(new Dictionary<string, object?>
+            {
+                ["ChildContent"] = content,
+            });
+
+            var output = await htmlRenderer.RenderComponentAsync<Alert>(parameters);
+            return output.ToHtmlString();
+        });
+
+
+        await base.OnInitializedAsync();
+    }
+}

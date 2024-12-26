@@ -1,0 +1,68 @@
+﻿@page "/dataannotationsvalidatordemo"
+@rendermode InteractiveServer
+@using BlazorWebAppDemo.Model
+
+<h3>Edit Form Demo</h3>
+
+<EditForm Model="@_superhero" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <InputText @bind-Value="_superhero.Name" />
+    <ValidationMessage For="@(() => _superhero.Name)"/>
+
+    <InputText @bind-Value="_superhero.RealName" />
+    <InputText @bind-Value="_superhero.Powers" />
+
+    <InputText
+        Value="@_superhero.Powers"
+        ValueChanged="@(value => _superhero.Powers = value)"
+        ValueExpression="@(() => _superhero.Powers)"
+    />
+
+    <InputTextControl
+        Id="Realname"
+        Label="Real name"
+        @bind-Value="_superhero.RealName" />
+
+    <ValidationSummary />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    // private Superhero _superhero = new Superhero
+    // {
+    //     Name = "Superman",
+    //     RealName = "Clark Kent",
+    //     Powers = "Super strength, flight, invulnerability, super speed, heat vision, freeze breath, x-ray vision, superhuman hearing, healing factor, and longevity"
+    // };
+    //
+
+    // private EditContext? _editContext;
+    //
+    // protected override void OnInitialized()
+    // {
+    //     _editContext = new EditContext(_superhero);
+    // }
+
+    private Superhero _superhero = new();
+
+    private void HandleValidSubmit(EditContext editContext)
+    {
+        Console.WriteLine("Form is valid");
+    }
+
+    private void HandleInvalidSubmit(EditContext editContext)
+    {
+        Console.WriteLine("Form is invalid");
+    }
+
+    private void HandleSubmit(EditContext editContext)
+    {
+        Console.WriteLine("Form submitted");
+
+        var nameField = editContext.Field(nameof(Superhero.Name));
+        editContext.IsModified(nameField);
+        editContext.IsValid(nameField);
+        editContext.MarkAsUnmodified(nameField);
+    }
+}

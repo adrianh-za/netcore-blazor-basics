@@ -1,0 +1,18 @@
+﻿@page "/paramdemo"
+
+<h3>ParameterDemo</h3>
+
+<InputText Value="@RaccoonsAreAwesome" />
+
+@code {
+    string RaccoonsAreAwesome = "Yes";
+
+    [Parameter]
+    public string? Param1 { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Param2 { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? Param3 { get; set; }
+}

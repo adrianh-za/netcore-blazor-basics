@@ -1,0 +1,28 @@
+﻿@page "/navigationmanagerdemo"
+@inject NavigationManager NavigationManager
+
+<h3>NavigationManagerDemo</h3>
+
+<RefreshTestComponent />
+<br /><br />
+<RefreshTestComponent @rendermode="InteractiveServer"/>
+<br /><br />
+<RefreshTestComponent @rendermode="InteractiveAuto"/>
+<br /><br />
+
+@code {
+    void ThingsToDo()
+    {
+        NavigationManager.NavigateTo("/counter");
+        NavigationManager.NavigateTo("/navigationmanagerdemo");
+        NavigationManager.NavigateTo("/navlinkdemo", true);
+        var baseUri = NavigationManager.BaseUri;
+
+        var queries = new Dictionary<string, object>
+        {
+            ["name"] = "John",
+            ["age"] = 30
+        };
+        var newUri = NavigationManager.GetUriWithQueryParameters(queries!);
+    }
+}

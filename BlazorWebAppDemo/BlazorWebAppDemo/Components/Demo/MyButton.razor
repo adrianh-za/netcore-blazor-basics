@@ -1,0 +1,37 @@
+﻿<button
+    disabled="@isDisabled"
+    @attributes="AdditionalAttributes"
+    @onclick="OnClickHandler">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private bool isExecuting = false;
+    private bool isDisabled => isExecuting;
+
+    private async Task OnClickHandler(MouseEventArgs e)
+    {
+        if (isExecuting)
+            return;
+
+        try
+        {
+            isExecuting = true;
+            //await InvokeAsync(StateHasChanged); //This is not required, but for demo only.  use very sparingly
+            await OnClick.InvokeAsync(e);
+        }
+        finally
+        {
+            isExecuting = false;
+        }
+    }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = @<text>Click me</text>;
+}

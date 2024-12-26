@@ -1,0 +1,24 @@
+﻿@page "/injectdemo"
+@rendermode InteractiveServer
+
+@using BlazorWebAppDemo.Services
+@inject IMyService MyService;
+
+<h3>InjectDemo</h3>
+
+<button @onclick="@(HandleOnClick)">
+    Add rocket racoon
+</button>
+
+@foreach(var name in MyService.Names)
+{
+    <p>@name</p>
+}
+
+@code {
+
+    void HandleOnClick()
+    {
+        MyService.AddName("Rocket Racoon");
+    }
+}

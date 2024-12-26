@@ -1,0 +1,22 @@
+﻿@page "/virtualizedemo"
+@rendermode InteractiveServer
+@using BlazorWebAppDemo.Services
+
+@inject ISuperheroService SuperheroService
+
+<h3>VirtualizeDemo</h3>
+
+<table>
+    <Virtualize Items="@SuperheroService.GetData()">
+        <tr>
+            <td>@context.Name</td>
+            <td>@context.RealName</td>
+            <td>@context.Powers</td>
+        </tr>
+    </Virtualize>
+</table>
+
+
+@code {
+
+}

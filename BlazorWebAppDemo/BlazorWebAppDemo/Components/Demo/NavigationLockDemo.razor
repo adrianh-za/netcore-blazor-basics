@@ -1,0 +1,28 @@
+﻿@page "/navigationlockdemo"
+@rendermode InteractiveServer
+
+@inject IJSRuntime JsRuntime
+
+<h3>NavigationLockDemo</h3>
+
+<NavigationLock
+    ConfirmExternalNavigation="true"
+    OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+
+<a href="https://CodingAfterWork.com">External link</a>
+<br />
+<a href="/navigationlockdemo">Internal link</a>
+
+@code {
+    public string InternalNavigationMessage { get; set; } = "Are you sure you want to navigate away?";
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        //This requires the entire app to be interactive.  Update Routes render with InteractiveServer
+        var isConfirmed = await JsRuntime.InvokeAsync<bool>("confirm", InternalNavigationMessage);
+
+        if (!isConfirmed)
+        {
+            context.PreventNavigation();
+        }
+    }
+}
